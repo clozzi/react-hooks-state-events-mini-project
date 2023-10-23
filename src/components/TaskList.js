@@ -1,16 +1,15 @@
 import React from "react";
-import Task from "./Task"
+import Task from "./Task";
+import { v4 as uuid } from "uuid";
+
 
 function TaskList({ tasks }) {
-  const tasksToDisplay = tasks.map((item) => {
-    return item
-  })
 
   return (
     <div className="tasks">
       <ul className="ToDos">
-        {tasksToDisplay.map((task) => (
-          <Task key={task.id} text={task.text} category={task.category} />
+        {tasks.map((task) => (
+          <Task key={uuid()} text={task.text} category={task.category} />
         ))}
       </ul>
     </div>

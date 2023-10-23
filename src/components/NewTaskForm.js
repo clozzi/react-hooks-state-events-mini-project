@@ -1,15 +1,30 @@
-import React from "react";
+import React, {useState} from "react";
+import { v4 as uuid } from "uuid";
 
-function NewTaskForm({ categories }) {
+function NewTaskForm({ categories, onTaskFormSubmit }) {
+  const [newTaskName, setNewTaskName] = useState('To Do');
+  const [newTaskCategory, setNewTaskCategory] = useState('Code')
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const newTask = {
+      category: newTaskCategory,
+      text: newTaskName,
+      key: uuid()      
+    }
+    console.log(newTask)
+    onTaskFormSubmit(newTask)
+  }
+
   return (
-    <form className="new-task-form">
+    <form onSubmit={handleSubmit} className="new-task-form">
       <label>
         Details
-        <input type="text" name="text" />
+        <input type="text" name="text" value={newTaskName} onChange={(e) => setNewTaskName(e.target.value)}/>
       </label>
       <label>
         Category
-        <select name="category">
+        <select name="category" onChange={(e) => setNewTaskCategory(e.target.value)}>
           {categories.slice(1).map((category) => (
             <option value={category} key={category}>{category}</option>
           ))}
